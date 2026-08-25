@@ -1,0 +1,178 @@
+<!-- Betting Strategies & Advanced Statistics Module -->
+<div id="strategiesModule" class="module hidden">
+    <div class="module-header">
+        <h2>📚 Betting Strategies & Analysis</h2>
+        <button class="close-btn" onclick="closeModule('strategiesModule">&times;</button>
+    </div>
+
+    <div class="module-content">
+        <!-- Strategy Selector -->
+        <div class="strategy-section">
+            <h3>Select Betting Strategy</h3>
+            <div class="strategy-grid">
+                <div class="strategy-card" data-strategy="martingale">
+                    <h4>💲 Martingale System</h4>
+                    <p class="strategy-desc">Double your bet after every loss</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>HIGH</strong></span>
+                    </div>
+                </div>
+
+                <div class="strategy-card" data-strategy="fibonacci">
+                    <h4>🔜 Fibonacci System</h4>
+                    <p class="strategy-desc">Follow Fibonacci sequence for bet progression</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>MEDIUM</strong></span>
+                    </div>
+                </div>
+
+                <div class="strategy-card" data-strategy="dalembert">
+                    <h4>🔍 D'Alembert System</h4>
+                    <p class="strategy-desc">Increase bet by 1 unit after loss, decrease after win</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>MEDIUM</strong></span>
+                    </div>
+                </div>
+
+                <div class="strategy-card" data-strategy="labouchere">
+                    <h4>📝 Labouchere System</h4>
+                    <p class="strategy-desc">Cross off numbers from a sequence</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>MEDIUM-HIGH</strong></span>
+                    </div>
+                </div>
+
+                <div class="strategy-card" data-strategy="paroli">
+                    <h4>🎯 Paroli System</h4>
+                    <p class="strategy-desc">Double bet after each win (positive progression)</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>LOW-MEDIUM</strong></span>
+                    </div>
+                </div>
+
+                <div class="strategy-card" data-strategy="flat">
+                    <h4>💵 Flat Betting</h4>
+                    <p class="strategy-desc">Bet the same amount every time</p>
+                    <div class="strategy-stats">
+                        <span class="risk-level">Risk: <strong>LOW</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Details -->
+        <div id="strategyDetails" class="strategy-details">
+            <div class="detail-card">
+                <h3 id="strategyTitle">Select a strategy</h3>
+                <p id="strategyDescription">Click on a strategy card above to see detailed analysis</p>
+                <div id="strategyInfo"></div>
+            </div>
+        </div>
+
+        <!-- Simulation Section -->
+        <div class="simulation-section">
+            <h3>📊 Simulate Strategy</h3>
+            <div class="simulation-controls">
+                <div class="control-group">
+                    <label>Initial Bet:</label>
+                    <input type="number" id="simInitialBet" value="10" min="1">
+                </div>
+                <div class="control-group">
+                    <label>Spins to Simulate:</label>
+                    <input type="number" id="simSpins" value="100" min="10" max="1000">
+                </div>
+                <div class="control-group">
+                    <label>Win Probability (%):</label>
+                    <input type="number" id="simWinProb" value="48.6" min="1" max="99" step="0.1">
+                </div>
+                <button class="btn btn-primary" onclick="runSimulation()">Run Simulation</button>
+            </div>
+
+            <!-- Simulation Results -->
+            <div id="simulationResults" class="simulation-results hidden">
+                <h4>Simulation Results</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-label">Final Balance:</span>
+                        <span class="result-value" id="finalBalance">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Wins:</span>
+                        <span class="result-value" id="totalWinsResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Losses:</span>
+                        <span class="result-value" id="totalLossesResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Win Rate:</span>
+                        <span class="result-value" id="winRateResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Max Bet Used:</span>
+                        <span class="result-value" id="maxBetResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">ROI:</span>
+                        <span class="result-value" id="roiResult">-</span>
+                    </div>
+                </div>
+                <canvas id="simulationChart" style="max-height: 400px; margin-top: 20px;"></canvas>
+            </div>
+        </div>
+
+        <!-- Advanced Statistics -->
+        <div class="advanced-stats-section">
+            <h3>📋 Advanced Statistics</h3>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h4>House Edge Analysis</h4>
+                    <p id="houseEdgeAnalysis">House Edge: 2.7% (Single Zero Roulette)</p>
+                    <div class="stat-chart" id="houseEdgeChart"></div>
+                </div>
+
+                <div class="stat-box">
+                    <h4>Probability Distribution</h4>
+                    <div class="probability-grid">
+                        <div class="prob-item">
+                            <span>Single Number</span>
+                            <span class="prob-value">2.7%</span>
+                        </div>
+                        <div class="prob-item">
+                            <span>Red/Black</span>
+                            <span class="prob-value">48.6%</span>
+                        </div>
+                        <div class="prob-item">
+                            <span>Even/Odd</span>
+                            <span class="prob-value">48.6%</span>
+                        </div>
+                        <div class="prob-item">
+                            <span>Range (1-12)</span>
+                            <span class="prob-value">32.4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h4>Expected Value Calculator</h4>
+                    <div class="ev-calculator">
+                        <div class="ev-input">
+                            <label>Bet Type:</label>
+                            <select id="evBetType">
+                                <option value="number">Single Number (36:1)</option>
+                                <option value="color">Red/Black (1:1)</option>
+                                <option value="range">Range (2:1)</option>
+                            </select>
+                        </div>
+                        <div class="ev-input">
+                            <label>Bet Amount:</label>
+                            <input type="number" id="evBetAmount" value="100" min="1">
+                        </div>
+                        <button class="btn btn-secondary" onclick="calculateEV()">Calculate EV</button>
+                        <div id="evResult" class="ev-result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
