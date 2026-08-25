@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Roulette Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎡 Educational Roulette Simulator</h1>
+            <p class="subtitle">Learn about probability and gaming mechanics (No Real Money)</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Left Panel: Roulette Wheel -->
+            <div class="left-panel">
+                <div class="wheel-container">
+                    <svg id="rouletteWheel" width="300" height="300" viewBox="0 0 300 300">
+                        <circle cx="150" cy="150" r="140" fill="none" stroke="#333" stroke-width="2"/>
+                        <g id="wheelNumbers"></g>
+                        <circle cx="150" cy="150" r="20" fill="#FFD700" stroke="#333" stroke-width="2"/>
+                        <text x="150" y="155" text-anchor="middle" font-size="12" font-weight="bold">0</text>
+                    </svg>
+                    <div class="pointer"></div>
+                </div>
+                <div id="lastResult" class="last-result">Last Result: -</div>
+            </div>
+
+            <!-- Right Panel: Controls and Info -->
+            <div class="right-panel">
+                <!-- Statistics -->
+                <div class="stats-section">
+                    <h2>📊 Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Spins:</span>
+                            <span class="stat-value" id="spinCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Virtual Balance:</span>
+                            <span class="stat-value" id="balance">1000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Win Rate:</span>
+                            <span class="stat-value" id="winRate">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Wins:</span>
+                            <span class="stat-value" id="totalWins">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Betting Section -->
+                <div class="betting-section">
+                    <h2>💰 Place Your Bet</h2>
+                    
+                    <div class="bet-type-selector">
+                        <button class="bet-type-btn active" data-type="number">Number</button>
+                        <button class="bet-type-btn" data-type="color">Color</button>
+                        <button class="bet-type-btn" data-type="even-odd">Even/Odd</button>
+                        <button class="bet-type-btn" data-type="range">Range</button>
+                    </div>
+
+                    <!-- Number Betting -->
+                    <div class="bet-options" id="numberBet">
+                        <label>Select Number (0-36):</label>
+                        <input type="number" id="selectedNumber" min="0" max="36" value="0">
+                    </div>
+
+                    <!-- Color Betting -->
+                    <div class="bet-options hidden" id="colorBet">
+                        <label>Select Color:</label>
+                        <div class="color-buttons">
+                            <button class="color-btn red-btn" data-color="red">🔴 Red</button>
+                            <button class="color-btn black-btn" data-color="black">⚫ Black</button>
+                            <button class="color-btn green-btn" data-color="green">🟢 Green</button>
+                        </div>
+                    </div>
+
+                    <!-- Even/Odd Betting -->
+                    <div class="bet-options hidden" id="evenOddBet">
+                        <label>Select:</label>
+                        <div class="even-odd-buttons">
+                            <button class="even-odd-btn" data-choice="even">Even</button>
+                            <button class="even-odd-btn" data-choice="odd">Odd</button>
+                        </div>
+                    </div>
+
+                    <!-- Range Betting -->
+                    <div class="bet-options hidden" id="rangeBet">
+                        <label>Select Range:</label>
+                        <div class="range-buttons">
+                            <button class="range-btn" data-range="1-12">1-12</button>
+                            <button class="range-btn" data-range="13-24">13-24</button>
+                            <button class="range-btn" data-range="25-36">25-36</button>
+                        </div>
+                    </div>
+
+                    <!-- Bet Amount -->
+                    <div class="bet-amount-section">
+                        <label for="betAmount">Bet Amount:</label>
+                        <input type="number" id="betAmount" min="10" max="1000" value="50" step="10">
+                        <div class="quick-bet-buttons">
+                            <button class="quick-bet" data-amount="10">10</button>
+                            <button class="quick-bet" data-amount="50">50</button>
+                            <button class="quick-bet" data-amount="100">100</button>
+                            <button class="quick-bet" data-amount="500">500</button>
+                        </div>
+                    </div>
+
+                    <!-- Spin Button -->
+                    <button id="spinBtn" class="spin-btn">🎰 SPIN THE WHEEL</button>
+                </div>
+
+                <!-- Result Display -->
+                <div id="resultDisplay" class="result-display hidden">
+                    <h3>Result</h3>
+                    <p id="resultText"></p>
+                    <p id="payout"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <h2>ℹ️ How to Play</h2>
+            <div class="info-content">
+                <div class="info-card">
+                    <h3>Betting Types & Payouts</h3>
+                    <ul>
+                        <li><strong>Single Number:</strong> 36:1 payout</li>
+                        <li><strong>Color (Red/Black):</strong> 1:1 payout</li>
+                        <li><strong>Even/Odd:</strong> 1:1 payout</li>
+                        <li><strong>Range (1-12, 13-24, 25-36):</strong> 2:1 payout</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Educational Purpose</h3>
+                    <p>This simulator helps you understand:</p>
+                    <ul>
+                        <li>Probability theory</li>
+                        <li>Risk management</li>
+                        <li>Expected value calculations</li>
+                        <li>Why house always has an edge</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Rules</h3>
+                    <ul>
+                        <li>Start with 1000 virtual credits</li>
+                        <li>Each spin costs your bet amount</li>
+                        <li>Win based on your prediction</li>
+                        <li>Track your statistics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="resetBtn" class="reset-btn">🔄 Reset Game</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
